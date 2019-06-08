@@ -29,6 +29,12 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(helpers.format_phone_number(base_number), '800-444-5522')
         self.assertEqual(helpers.format_phone_number(number_with_country), '1-800-444-5522')
 
+    def test_get_character_list(self):
+        self.assertEqual(helpers.get_character_list('800-444-5522'),
+                         ['8', '0', '0', '4', '4', '4', '5', '5', '2', '2'])
+        self.assertEqual(helpers.get_character_list('  INVALID  ## $$ ----'), ['I', 'N', 'V', 'A', 'L', 'I', 'D'])
+        self.assertRaises(ValueError, helpers.get_character_list, 33)
+
 
 if __name__ == '__main__':
     unittest.main()

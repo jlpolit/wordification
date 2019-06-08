@@ -1,4 +1,6 @@
 import enchant
+import re
+
 # derived from a google image search of an "old fashioned" phone
 letters_from_numbers_lookup = {'2': ['A', 'B', 'C'],
                                '3': ['D', 'E', 'F'],
@@ -59,3 +61,10 @@ def format_phone_number(phone_digit_list: list) -> str:
         out_str += str(digit)
 
     return out_str
+
+
+def get_character_list(phone_words: str) -> list:
+    if type(phone_words) is not str:
+        raise ValueError("Not a Valid Input")
+    return [x for x in re.sub('\W+', '', phone_words)]
+

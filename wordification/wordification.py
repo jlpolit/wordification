@@ -1,4 +1,3 @@
-import re
 import wordification.helpers as helpers
 
 
@@ -13,7 +12,7 @@ def words_to_number(phone_words: str) -> str:
     :return: the number corresponding to this phone #
     """
     # drop hyphens, put everything into a list
-    character_list = [x for x in re.sub('\W+', '', phone_words)]
+    character_list = helpers.get_character_list(phone_words)
     out_list = []
     for c in character_list:
         if c.isdigit():
