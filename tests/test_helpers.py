@@ -15,6 +15,9 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(helpers.is_valid_word('fnnn'), False)
         # make sure errors are thrown when appropriate
         self.assertRaises(ValueError, helpers.is_valid_word, 5)
+        # check our exception functionality
+        self.assertEqual(helpers.is_valid_word('I', 2), False)
+        self.assertEqual(helpers.is_valid_word('I', 2, ['I']), True)
 
     def test_format_phone_number(self):
         # test failure cases

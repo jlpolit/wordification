@@ -19,14 +19,18 @@ numbers_from_letters_lookup = {'A': '2', 'B': '2', 'C': '2',
                                'T': '8', 'U': '8', 'V': '8',
                                'W': '9', 'X': '9', 'Y': '9', 'Z': '9'}
 
+english_word_lookup = enchant.Dict("en_US")
 
-def is_valid_word(word_to_check: str, min_length=1) -> bool:
+
+# TODO: it might make sense to allow 'I' and 'a' with the stipulation that they be followed by a valid word...
+def is_valid_word(word_to_check: str,
+                  min_length=2,
+                  exceptions=list()) -> bool:
     if type(word_to_check) is not str:
         raise ValueError("Non-string entered")
-    if len(word_to_check) < min_length:
+    if (len(word_to_check) < min_length) and (word_to_check not in exceptions):
         return False
     else:
-        english_word_lookup = enchant.Dict("en_US")
         return english_word_lookup.check(word_to_check)
 
 
