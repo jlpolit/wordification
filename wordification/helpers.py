@@ -97,13 +97,38 @@ def has_valid_word(char_list: list) -> bool:
     note that this word must be surrounded on both sides by numbers (1800-PAINTX is not a valid word)
     """
     phone_number = ''.join(char_list)
-    only_letters = re.sub("\d", " ", phone_number)
+    only_letters = re.sub("\d", " ", phone_number).strip()
     letters_split = only_letters.split(' ')
-    for sub_word in letters_split:
-        if len(sub_word) > 2:
-            if is_valid_word(''.join(sub_word)):
-                return True
-    return False
+    n_valid = 0
+    n_char = 0
+    has_preposition = False
+    for i in range(len(letters_split)):
+        sub_word = letters_split[i]
+        if sub_word != '':
+            if i == 0:
+                if (len(sub_word) < 3) and (sub_word not in ['A', 'AN', 'I']):
+                    return False
+                elif sub_word in ['A', 'AN', 'I']:
+                    n_valid += 1
+                    n_char += 1
+                    has_preposition = True
+                elif (len(sub_word) < 3) or (is_valid_word(''.join(sub_word)) is False):
+                    return False
+                else:
+                    n_valid += 1
+                    n_char += 1
+            elif (len(sub_word) < 3) or (is_valid_word(''.join(sub_word)) is False):
+                return False
+            else:
+                n_valid += 1
+                n_char += 1
+    if has_preposition:
+        if len(letters_split) > 1:
+            return (n_valid == n_char) and (n_valid > 0)
+        else:
+            return False
+    else:
+        return (n_valid == n_char) and (n_valid > 0)
 
 
 def format_wordification(char_list: list) -> str:
@@ -129,3 +154,7 @@ def format_wordification(char_list: list) -> str:
         if (n == 11) and (char_list[0] == '1') and(out[1] != '-'):
             out = '1-' + out[1:]
     return out
+
+
+if __name__ == '__main__':
+    print(has_valid_word(['1','2','3']))

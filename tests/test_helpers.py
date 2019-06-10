@@ -43,15 +43,6 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(helpers.all_combinations(['1','2']), [('1', 'A'), ('1', 'B'), ('1', 'C'), ('1', '2')])
         self.assertEqual(len(helpers.all_combinations(['2', '3'])), 16)
 
-    def test_has_valid_word(self):
-        self.assertEqual(helpers.has_valid_word(['1','2','3']), False)
-        self.assertEqual(helpers.has_valid_word(['1', 'I', '3']), False)
-        self.assertEqual(helpers.has_valid_word(['1', 'M', 'Y']), False)
-        self.assertEqual(helpers.has_valid_word(['M', 'I', '5', 'N','E']), False)
-        self.assertEqual(helpers.has_valid_word(['5', 'M', 'I', 'N', 'E', '8']), True)
-        self.assertEqual(helpers.has_valid_word(['5', 'M', 'I', 'N', 'E', 'T']), False)
-        self.assertEqual(helpers.has_valid_word(['I', '5', '5', 'P', 'A', 'I', 'N', 'T']), True)
-
     def test_format_wordification(self):
         self.assertEqual(helpers.format_wordification(['1', '8', '0', '0', '8', '8', '8', '3', '2', '9', '9']),
                          '1-800-888-3299')
@@ -61,6 +52,15 @@ class TestHelperFunctions(unittest.TestCase):
                          '1-MYDUCKS-3333')
         self.assertEqual(helpers.format_wordification(['M', 'I', '3', '3', 'D', 'U', 'C', 'K', '1', '1']),
                          'MI-33-DUCK-11')
+
+    def test_has_valid_word(self):
+        self.assertEqual(helpers.has_valid_word(['1', '2', '3']), False)
+        self.assertEqual(helpers.has_valid_word(['1', 'I', '3']), False)
+        self.assertEqual(helpers.has_valid_word(['1', 'M', 'Y']), False)
+        self.assertEqual(helpers.has_valid_word(['M', 'I', '5', 'N', 'E']), False)
+        self.assertEqual(helpers.has_valid_word(['5', 'M', 'I', 'N', 'E', '8']), True)
+        self.assertEqual(helpers.has_valid_word(['5', 'M', 'I', 'N', 'E', 'T']), False)
+        self.assertEqual(helpers.has_valid_word(['I', '5', '5', 'P', 'A', 'I', 'N', 'T']), True)
 
 
 if __name__ == '__main__':

@@ -33,6 +33,7 @@ def words_to_number(phone_words: str) -> str:
 
 
 def all_wordifications(phone_num: str) -> str:
+    # TODO: need to limit to cases where EVERY chunk is a valid word, not just some
     character_list = helpers.get_character_list(phone_num)
     combos = helpers.all_combinations(character_list)
     combo_df = pd.DataFrame()
@@ -40,3 +41,5 @@ def all_wordifications(phone_num: str) -> str:
     combo_df['has_word'] = combo_df.potential_word.apply(lambda x: helpers.has_valid_word(x))
     valid_combo_df = combo_df[combo_df.has_word == True]
     return valid_combo_df.potential_word.apply(lambda x: helpers.format_wordification(x))
+
+
