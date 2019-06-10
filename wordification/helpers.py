@@ -142,7 +142,7 @@ def format_wordification(char_list: list) -> str:
     char_str = ''.join(char_list)
     num_letter_list = re.split('(\d+)', char_str)
     if len(num_letter_list) == 3:
-        out = format_phone_number(char_list)
+        out = format_phone_number(list(char_list))
     else:
         for chunk in num_letter_list:
             if chunk in ['', ' ']:
@@ -151,10 +151,14 @@ def format_wordification(char_list: list) -> str:
                 out += chunk
                 out += '-'
         out = out[:-1]
-        if (n == 11) and (char_list[0] == '1') and(out[1] != '-'):
-            out = '1-' + out[1:]
-    return out
+        if n == 11:
+            if (char_list[0] == '1') and(out[1] != '-'):
+                out = '1-' + out[1:]
+            if out[2:5].isdigit():
+                out = out[:5] + "-" + out[5:]
+        if (n == 10) and (out[:3].isdigit()):
+            out = out[:3] + "-" + out[3:]
 
+    out = re.sub(r'([A-Z])-([A-Z])', r'\1\2', out)
+    return out.replace('--', '-')
 
-if __name__ == '__main__':
-    print(has_valid_word(['1','2','3']))
