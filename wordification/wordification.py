@@ -1,9 +1,17 @@
-import re
 import wordification.helpers as helpers
+import pandas as pd
+import random
 
 
 def number_to_words(phone_num: str) -> str:
-    raise NotImplementedError
+    """
+    assumption: a valid wordification can be one word of 3 or more letters,
+    or a 1-2 letter word followed by a longer word
+    :param phone_num: a string representation of a phone number
+    :return: a valid wordification of that number
+    """
+    all_words = all_wordifications(phone_num)
+    return random.choice(all_words)
 
 
 def words_to_number(phone_words: str) -> str:
@@ -13,7 +21,7 @@ def words_to_number(phone_words: str) -> str:
     :return: the number corresponding to this phone #
     """
     # drop hyphens, put everything into a list
-    character_list = [x for x in re.sub('\W+', '', phone_words)]
+    character_list = helpers.get_character_list(phone_words)
     out_list = []
     for c in character_list:
         if c.isdigit():
@@ -25,5 +33,12 @@ def words_to_number(phone_words: str) -> str:
 
 
 def all_wordifications(phone_num: str) -> str:
-    raise NotImplementedError
-
+    character_list = helpers.get_character_list(phone_num)
+    combos = helpers.all_combinations(character_list)
+    combo_df = pd.DataFrame()
+    combo_df['potential_word'] = combos
+    combo_df['has_word'] = combo_df.potential_word.apply(lambda x: helpers.has_valid_word(x))
+    valid_combo_df = combo_df[combo_df.has_word == True]
+    return valid_combo_df.potential_word \
+        .apply(lambda x: helpers.format_wordification(x)) \
+        .tolist()
