@@ -34,7 +34,7 @@ class TestWordificationFunctions(unittest.TestCase):
                    '1-800-228-6277',
                    '953-883-7769']
 
-        words3 = all_wordifications(numbers[3])
+        words3 = all_wordifications(numbers[2])
 
         self.assertIn('1-800-PAINT-37', all_wordifications(numbers[0]))
         self.assertEqual(len(all_wordifications(numbers[1])), 15)
