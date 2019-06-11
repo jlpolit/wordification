@@ -10,7 +10,7 @@ def number_to_words(phone_num: str) -> str:
     :param phone_num: a string representation of a phone number
     :return: a valid wordification of that number
     """
-    all_words = all_wordifications(phone_num)
+    all_words = all_wordifications(phone_num.upper())
     return random.choice(all_words)
 
 
@@ -21,7 +21,7 @@ def words_to_number(phone_words: str) -> str:
     :return: the number corresponding to this phone #
     """
     # drop hyphens, put everything into a list
-    character_list = helpers.get_character_list(phone_words)
+    character_list = helpers.get_character_list(phone_words.upper())
     out_list = []
     for c in character_list:
         if c.isdigit():
@@ -33,7 +33,7 @@ def words_to_number(phone_words: str) -> str:
 
 
 def all_wordifications(phone_num: str) -> str:
-    character_list = helpers.get_character_list(phone_num)
+    character_list = helpers.get_character_list(phone_num.upper())
     combos = helpers.all_combinations(character_list)
     combo_df = pd.DataFrame()
     combo_df['potential_word'] = combos
